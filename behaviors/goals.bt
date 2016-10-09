@@ -1,0 +1,142 @@
+{
+    "1": {
+        "id": 1,
+        "class": "Sequence",
+        "name": "",
+        "options": {},
+        "children": [
+            "c7a2a7ad-c31d-4b1f-aa66-e06e6c4d9f5e",
+            "a31117a2-0d10-4c41-a086-a2568fcb721e",
+            "aeb8b184-7265-4abf-b9ba-5be59baed444",
+            "12775125-8e29-4d1f-809a-fb95bb121c11",
+            "f0b83230-69ea-41ed-8b52-235c49d6e270"
+        ]
+    },
+    "meta": {
+        "version": 1
+    },
+    "c7a2a7ad-c31d-4b1f-aa66-e06e6c4d9f5e": {
+        "id": "c7a2a7ad-c31d-4b1f-aa66-e06e6c4d9f5e",
+        "class": "Listen",
+        "name": "",
+        "options": {
+            "getOptions": [
+                "() => {",
+                "    let options = {",
+                "        heyJibo: false,",
+                "        detectEnd: false,",
+                "        incremental: false,",
+                "        authenticateSpeaker: ''",
+                "    }",
+                "    return options;",
+                "}"
+            ],
+            "rule": "greet.rule",
+            "onResult": [
+                "(listener) => {",
+                "  listener.on('cloud', function(asrResult, speakerIds) {",
+                "    console.log(asrResult.NLParse);",
+                "    console.log(asrResult.NLParse.what);",
+                "      if (asrResult.NLParse.what == 'goals') {",
+                "          notepad.whatNext = asrResult.NLParse.what;",
+                "          }",
+                "      else {",
+                "          notepad.whatNext = 'nothing';",
+                "            }",
+                "          });",
+                "}"
+            ]
+        },
+        "asset-pack": "core",
+        "parent": 1,
+        "skipped": false
+    },
+    "12775125-8e29-4d1f-809a-fb95bb121c11": {
+        "id": "12775125-8e29-4d1f-809a-fb95bb121c11",
+        "class": "ListenEmbedded",
+        "name": "",
+        "options": {
+            "rule": "hey_jibo",
+            "onResult": [
+                "(listener) => {z",
+                "\tlistener.on('hey-coach-jibo', function(asrResult, speakerIds) {",
+                "",
+                "\t});",
+                "}"
+            ]
+        },
+        "asset-pack": "core",
+        "parent": 1,
+        "skipped": true
+    },
+    "f0b83230-69ea-41ed-8b52-235c49d6e270": {
+        "id": "f0b83230-69ea-41ed-8b52-235c49d6e270",
+        "class": "TextToSpeech",
+        "name": "",
+        "options": {
+            "words": "goals",
+            "onWord": [
+                "(word) => {",
+                "  ",
+                "  var activity = require(\"../src/daily_activity.json\");",
+                "  var sleep = require(\"../src/sleep_goals.json\");",
+                "  var hours = sleep.consistency.recommendedSleepGoal % 60;",
+                "  jibo.tts.on('word', (word) => {",
+                "      //respond to words",
+                "  });",
+                "  ",
+                "  jibo.tts.speak(\"to walk: \" + activity.goals.steps + \" steps\\n\" + \"to climb \" + activity.goals.floors + \" floors\\n\" + \" and to sleep \" + hours + \" hours tonight.\"  , (err) => {",
+                "",
+                "  });",
+                "",
+                "}"
+            ]
+        },
+        "asset-pack": "core",
+        "parent": 1
+    },
+    "aeb8b184-7265-4abf-b9ba-5be59baed444": {
+        "id": "aeb8b184-7265-4abf-b9ba-5be59baed444",
+        "class": "PlayAnimation",
+        "name": "",
+        "options": {
+            "animPath": "excited.keys",
+            "config": [
+                "(animation) => {",
+                "}"
+            ]
+        },
+        "asset-pack": "core",
+        "parent": 1
+    },
+    "a31117a2-0d10-4c41-a086-a2568fcb721e": {
+        "id": "a31117a2-0d10-4c41-a086-a2568fcb721e",
+        "class": "PlayAudio",
+        "name": "",
+        "options": {
+            "audioPath": "FX_Bleep.mp3"
+        },
+        "asset-pack": "core",
+        "parent": 1,
+        "decorators": [
+            "15bf8c92-711a-4a3b-b7b1-58dd1f8d7ee5"
+        ]
+    },
+    "15bf8c92-711a-4a3b-b7b1-58dd1f8d7ee5": {
+        "id": "15bf8c92-711a-4a3b-b7b1-58dd1f8d7ee5",
+        "class": "StartOnCondition",
+        "name": "",
+        "options": {
+            "init": [
+                "() => {",
+                "  asrResult.NLParse.what == 'goals'",
+                "}"
+            ],
+            "conditional": [
+                "() => {",
+                "}"
+            ]
+        },
+        "asset-pack": "core"
+    }
+}
