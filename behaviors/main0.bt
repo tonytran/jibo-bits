@@ -1,0 +1,223 @@
+{
+    "1": {
+        "id": 1,
+        "class": "Sequence",
+        "name": "",
+        "asset-pack": "core",
+        "children": [
+            "12dcc4fc-0961-4b1c-ac0c-91d2f2812883",
+            "90c70994-8774-4c2b-a881-c75ff6771ae7",
+            "0e5ad9dd-a8e8-4e52-ad6e-81d2f74e5507",
+            "a15c9e08-3fec-4223-a71f-173a86e24d7d",
+            "a19d8113-13c2-4492-805c-c743e898fde9",
+            "c172cef1-d087-4730-b89f-194151d9e506",
+            6
+        ],
+        "decorators": [],
+        "options": {}
+    },
+    "6": {
+        "id": 6,
+        "class": "PlayAudio",
+        "name": "Bawhoop",
+        "asset-pack": "core",
+        "parent": 1,
+        "options": {
+            "audioPath": "FX_Whistle.mp3"
+        }
+    },
+    "meta": {
+        "version": 1
+    },
+    "90c70994-8774-4c2b-a881-c75ff6771ae7": {
+        "id": "90c70994-8774-4c2b-a881-c75ff6771ae7",
+        "class": "ListenEmbedded",
+        "name": "",
+        "options": {
+            "rule": "hey_jibo",
+            "onResult": [
+                "(listener) => {z",
+                "\tlistener.on('sync-my-fitbit', function(asrResult, speakerIds) {",
+                "",
+                "\t});",
+                "}"
+            ]
+        },
+        "asset-pack": "core",
+        "parent": 1,
+        "skipped": true
+    },
+    "0e5ad9dd-a8e8-4e52-ad6e-81d2f74e5507": {
+        "id": "0e5ad9dd-a8e8-4e52-ad6e-81d2f74e5507",
+        "class": "PlayAnimation",
+        "name": "",
+        "options": {
+            "animPath": "greeting.keys",
+            "config": [
+                "(animation) => {",
+                "}"
+            ]
+        },
+        "asset-pack": "core",
+        "parent": 1,
+        "decorators": [
+            "fc77ed8b-f2df-401a-944e-819d18fd6826"
+        ]
+    },
+    "a19d8113-13c2-4492-805c-c743e898fde9": {
+        "id": "a19d8113-13c2-4492-805c-c743e898fde9",
+        "class": "TextToSpeech",
+        "name": "",
+        "options": {
+            "words": "okay \n",
+            "onWord": [
+                "(word) => {",
+                "  ",
+                "  ",
+                "  var jibo = require(\"jibo\");",
+                "  jibo.tts.on('word', (word) => {",
+                "      //respond to words",
+                "  });",
+                "  jibo.tts.speak(\"fetching data...\", (err) => {",
+                "  ",
+                "  });",
+                "",
+                "}"
+            ]
+        },
+        "asset-pack": "core",
+        "parent": 1
+    },
+    "12dcc4fc-0961-4b1c-ac0c-91d2f2812883": {
+        "id": "12dcc4fc-0961-4b1c-ac0c-91d2f2812883",
+        "class": "Listen",
+        "name": "",
+        "options": {
+            "getOptions": [
+                "() => {",
+                "    let options = {",
+                "        heyJibo: false,",
+                "        detectEnd: false,",
+                "        incremental: false,",
+                "        authenticateSpeaker: ''",
+                "    }",
+                "    return options;",
+                "}"
+            ],
+            "rule": "syncbit.rule",
+            "onResult": [
+                "(listener) => {",
+                "  listener.on('cloud', function(asrResult, speakerIds) {",
+                "    console.log(asrResult.NLParse.what);",
+                "      if (asrResult.NLParse.what == 'fitaf') {",
+                "          notepad.whatNext = asrResult.NLParse.what;",
+                "          }",
+                "      else {",
+                "          notepad.whatNext = 'nothing';",
+                "            }",
+                "          });",
+                "}"
+            ]
+        },
+        "asset-pack": "core",
+        "parent": 1
+    },
+    "fc77ed8b-f2df-401a-944e-819d18fd6826": {
+        "id": "fc77ed8b-f2df-401a-944e-819d18fd6826",
+        "class": "StartOnCondition",
+        "name": "",
+        "options": {
+            "init": [
+                "() => {",
+                "",
+                "}"
+            ],
+            "conditional": [
+                "() => {",
+                "  if (notepad.whatNext == 'fitaf') {",
+                "    return true;",
+                "  }",
+                "  return false;",
+                "}"
+            ]
+        },
+        "asset-pack": "core"
+    },
+    "a15c9e08-3fec-4223-a71f-173a86e24d7d": {
+        "id": "a15c9e08-3fec-4223-a71f-173a86e24d7d",
+        "class": "ExecuteScript",
+        "name": "",
+        "options": {
+            "exec": [
+                "() => {",
+                "",
+                "var activity = require(\"../src/daily_activity.json\");",
+                "var sleep = require(\"../src/sleep_goals.json\");",
+                "var daily_sleep = require(\"../src/sleep_log_2016-10-8.json\");",
+                "",
+                "",
+                "var steps_to_complete = activity.goals.steps - activity.summary.steps;",
+                "    if (steps_to_complete < 0) {",
+                "        console.log(\"Congrats you're \"+steps_to_complete+ \" steps over your step goal.\");",
+                "      }",
+                "    else {",
+                "        console.log(\"You need \"+steps_to_complete + \" to complete your goal of \" + activity.goals.steps  + \" for the day.\")",
+                "      }",
+                "var hours_slept = daily_sleep.sleep[0].minutesAsleep",
+                "var m = hours_slept % 60;",
+                "var h = (hours_slept - m) % 60;",
+                "var actual_hours = h.toString() + \":\" + (m<10?\"0\":\"\")+m.toString();",
+                "",
+                "console.log(\"Hours slept: \" + actual_hours);",
+                "};"
+            ]
+        },
+        "asset-pack": "core",
+        "parent": 1
+    },
+    "c172cef1-d087-4730-b89f-194151d9e506": {
+        "id": "c172cef1-d087-4730-b89f-194151d9e506",
+        "class": "TextToSpeech",
+        "name": "",
+        "options": {
+            "words": "found!",
+            "onWord": [
+                "(word) => {",
+                "  var activity = require(\"../src/daily_activity.json\");",
+                "  var sleep = require(\"../src/sleep_goals.json\");",
+                "  var daily_sleep = require(\"../src/sleep_log_2016-10-8.json\");",
+                "",
+                "",
+                "  var steps_to_complete = activity.goals.steps - activity.summary.steps;",
+                "  console.log(steps_to_complete);",
+                "  console.log(daily_sleep.summary.steps);",
+                "  var hours_slept = daily_sleep.sleep[0].minutesAsleep",
+                "  var m = hours_slept % 60;",
+                "  var h = (hours_slept - m) % 60;",
+                "  var actual_hours = h.toString() + \":\" + (m<10?\"0\":\"\")+m.toString();",
+                "",
+                "  var jibo = require(\"jibo\");",
+                "  jibo.tts.on('word', (word) => {",
+                "      //respond to words",
+                "  });",
+                "  if (steps_to_complete < 0) {",
+                "    ",
+                "  jibo.tts.speak(\"Congrats you're \" + Math.abs(steps_to_complete) + \" steps over your step goal.\", (err) => {",
+                "",
+                "  });",
+                "  }",
+                "  else {",
+                "    ",
+                "    jibo.tts.speak(\"You need \"+steps_to_complete + \" steps to complete your goal of \" + activity.goals.steps  + \" for the day.\", (err) => {",
+                "",
+                "    });",
+                "  }",
+                "",
+                "  }",
+                "  "
+            ]
+        },
+        "asset-pack": "core",
+        "parent": 1
+    }
+}

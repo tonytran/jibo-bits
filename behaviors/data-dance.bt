@@ -1,0 +1,59 @@
+{
+    "1": {
+        "id": 1,
+        "class": "Sequence",
+        "name": "",
+        "options": {},
+        "children": [
+            "a5b1298b-0e9b-43bf-b747-0e74c3b46346",
+            "6999e648-d1fb-4e4e-b47d-d42e8bd5e415",
+            "a1a2dee5-2f1c-46a2-9dc5-f1ef885e4be1"
+        ]
+    },
+    "meta": {
+        "version": 1
+    },
+    "6999e648-d1fb-4e4e-b47d-d42e8bd5e415": {
+        "id": "6999e648-d1fb-4e4e-b47d-d42e8bd5e415",
+        "class": "PlayAnimation",
+        "name": "",
+        "options": {
+            "animPath": "greeting.keys",
+            "config": [
+                "(animation) => {",
+                "}"
+            ]
+        },
+        "asset-pack": "core",
+        "parent": 1
+    },
+    "a1a2dee5-2f1c-46a2-9dc5-f1ef885e4be1": {
+        "id": "a1a2dee5-2f1c-46a2-9dc5-f1ef885e4be1",
+        "class": "ExecuteScript",
+        "name": "",
+        "options": {
+            "exec": [
+                "() => {",
+                "  console.log(require(\"../src/daily_activity.json\"));",
+                "  console.log(obj.summary);",
+                "}"
+            ]
+        },
+        "asset-pack": "core",
+        "parent": 1
+    },
+    "a5b1298b-0e9b-43bf-b747-0e74c3b46346": {
+        "id": "a5b1298b-0e9b-43bf-b747-0e74c3b46346",
+        "class": "TextToSpeech",
+        "name": "",
+        "options": {
+            "words": "Hello",
+            "onWord": [
+                "(word) => {",
+                "}"
+            ]
+        },
+        "asset-pack": "core",
+        "parent": 1
+    }
+}

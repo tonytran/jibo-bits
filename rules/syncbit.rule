@@ -1,0 +1,1 @@
+TopRule = $* (sync my fitbit){what='fitaf'} $*;
